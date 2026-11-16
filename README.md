@@ -128,7 +128,9 @@ C6 y C7 del Laboratorio 5 ya estaban ocupadas (capas y comandos, Entrega 3), as�
 |-----------|----|----|---------------|
 | S1 en el artefacto de D-QS1 | Violada: 7 elementos únicos | Violada: BEN, BTR, BAD, BRI | Satisfecha |
 | D-QS1, Monte Carlo (40 × 20 años) | 99,305 % [99,285; 99,325], violada | 99,549 % [99,536; 99,563] con balanceadores, violada | 99,957 % [99,953; 99,961], con margen |
-| D-QS10, recuperación (10 réplicas, semillas 1–10) | 7.211,2 s (TRS) [7.194,8; 7.227,6], violada | 1.932,8 s (CAR) [1.921,5; 1.944,1], violada | 184,9 s [183,8; 186,1], con margen |
+| D-QS10, recuperación de CAR, custodias (10 réplicas, semillas 1–10) | 4.793,2 s [4.744,9; 4.841,4], violada | 1.932,8 s [1.921,5; 1.944,1], violada | 184,9 s [183,8; 186,1], con margen |
+| D-QS10, recuperación de TRS, posiciones (10 réplicas, semillas 1–10) | 7.211,2 s [7.194,8; 7.227,6], violada | 61,3 s [60,6; 61,9], con margen | 61,3 s [60,6; 61,9], con margen |
+| D-QS10, recuperación del NCS (el consumidor más lento) | 7.211,2 s (TRS), violada | 1.932,8 s (CAR), violada | 184,9 s (CAR), con margen |
 | Custodias perdidas | 0 | 0 | 0 |
 
 La simulación es determinista: con las mismas semillas da las mismas cifras en cada corrida (antes, `_stations` recorría un `set` de componentes y el orden de las estaciones, y con él las cifras de recuperación, cambiaba entre procesos).

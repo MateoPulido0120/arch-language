@@ -411,23 +411,64 @@ scenario QS_D10 "D-QS10" attribute "recuperabilidad"
   measure lost Custody <= 0 events
   run 17000 warmup 0 replications 10
 
-// Scenarios that the language cannot verify (Delivery 3, section 7). Their six parts are in
-// Delivery 2 and are not repeated here [PENDIENTE: copiarlas de la Entrega 2].
-scenario QS_D2 "D-QS2" attribute "disponibilidad"
+// Scenarios that the language cannot verify (Delivery 3, section 7). Six parts copied from
+// Delivery 2, section 5.2. The grammar has no field for the response measure in words, so it
+// goes at the end of the response, after "Medida:".
+scenario QS_D2 "D-QS2" attribute "Fault tolerance y Resilience"
+  source "Falla interna del Bus de Eventos"
+  stimulus "El Bus de Eventos no está disponible durante 10 min"
+  artifact TRA, D_K3, BUS, D_K6, CAR
+  environment "Pico: 21,5 hechos/s entrando al Bus (L5, L7, L2)"
+  response "Los hechos se conservan hasta que el Bus vuelve y luego se entregan sin duplicarse; las posiciones atrasadas pueden descartarse, las custodias y decisiones no; el levante y las consultas siguen atendiéndose. Medida: 0 custodias o decisiones perdidas en caídas de hasta 30 min; consumidores al día en 5 min o menos después de que el Bus vuelve; p99 del levante sin cambio mayor al 5 %"
   not_verifiable "Clases de evento con prioridad y una regla de descarte (compactación) en el Bus"
-scenario QS_D3 "D-QS3" attribute "seguridad"
+scenario QS_D3 "D-QS3" attribute "Security"
+  source "Atacante con control de una Aplicación del Inspector (dispositivo robado o comprometido)"
+  stimulus "Envía por D-K26 un informe falso, sin hallazgos y con sello íntegro, para conseguir el levante de un contenedor"
+  artifact ADU, D_K26
+  environment "Operación normal, 30 aplicaciones activas (L15)"
+  response "Solo se acepta el informe de un inspector autenticado que tenga asignada esa orden; el intento se rechaza, se registra y se avisa al supervisor aduanero. Medida: 0 informes procesados sin autenticación o de una orden no asignada; intento registrado y notificado en 15 min o menos"
   not_verifiable "Identidad, credenciales y límites de confianza por conector"
-scenario QS_D4 "D-QS4" attribute "desempeño"
+scenario QS_D4 "D-QS4" attribute "Performance"
+  source "Los cinco constituyentes, con sus consultas de estado"
+  stimulus "Las consultas suben de 100 a 300 req/s"
+  artifact NCG, TRA, CAR
+  environment "Pico de levante (L2)"
+  response "El levante se sigue atendiendo dentro de su tiempo; las consultas absorben la degradación. Medida: p99 del levante dentro del NCS de 800 ms o menos, medido en el National Coordination Gateway (de D-K1 a D-K2); consultas por encima de la tasa admitida rechazadas de forma explícita"
   not_verifiable "Tasas de llegada y capacidad en consultas por componente (p99_latency ya existe desde el Laboratorio 5)"
-scenario QS_D5 "D-QS5" attribute "escalabilidad"
+scenario QS_D5 "D-QS5" attribute "Scalability y Elasticity"
+  source "Crecimiento del número de transportadores y de cargas en el SoS"
+  stimulus "Las consultas de estado pasan de 100 a 400 req/s sostenidas, en 3 años (L21)"
+  artifact NCG, TRA, CAR, TRS, HCDB, HPDB
+  environment "Pico diario de consultas"
+  response "La capacidad crece agregando instancias y copias de lectura, sin rediseño. Medida: p99 de la consulta de 1 s o menos, medido en el National Coordination Gateway; cambios limitados a agregar recursos"
   not_verifiable "Capacidad y carga de consultas por instancia frente al crecimiento"
-scenario QS_D6 "D-QS6" attribute "elasticidad"
+scenario QS_D6 "D-QS6" attribute "Cost efficiency"
+  source "Fin de la jornada de operación"
+  stimulus "Las consultas bajan de 100 a 20 req/s durante la noche (L22)"
+  artifact NCG, TRA, ADU, CAR, TRS
+  environment "Operación normal, fuera del pico"
+  response "La capacidad sobrante se libera de forma automática. Medida: capacidad aprovisionada de 1,5 veces la necesaria o menos, en toda hora, sin bajar del mínimo de 2 instancias por servicio que exige D-QS1; liberación en 30 min o menos después de que baja la carga"
   not_verifiable "Perfiles de carga en el tiempo y costo por instancia-hora"
-scenario QS_D7 "D-QS7" attribute "integridad"
+scenario QS_D7 "D-QS7" attribute "Interoperability"
+  source "Road Transportation System (Road Gateway)"
+  stimulus "Reenvía por SoS-K5 una custodia ya recibida, que llega después de una custodia posterior del mismo contenedor"
+  artifact SoS_K5, SoS_K13, SoS_K15
+  environment "Red con pérdidas intermitentes; los emisores reenvían"
+  response "El NCS reconoce el duplicado y lo descarta, y ordena los hechos por la hora en que ocurrieron, no por la hora en que llegaron. Medida: 0 custodias duplicadas en el Historial de Carga DB; 100 % de los hechos ordenados por hora de ocurrencia; verificado con pruebas de conformidad de los tres modos"
   not_verifiable "Atributos del modelo canónico por conector; model checking de la regla de descarte de duplicados"
-scenario QS_D8 "D-QS8" attribute "interoperabilidad"
+scenario QS_D8 "D-QS8" attribute "Evolvability"
+  source "Gobernanza conjunta del CDM"
+  stimulus "Aprueba el CDM v2, que agrega el identificador único y la hora del hecho"
+  artifact NCG, TRA
+  environment "Coexistencia de versiones: cada constituyente migra en su propia fecha, durante 18 meses"
+  response "El NCS recibe y responde mensajes v1 y v2 a la vez, sin cambiar sus servicios internos. Medida: v1 soportada al menos 12 meses después de publicada la v2; 0 cambios en los servicios de los dominios; 0 interrupciones a otros constituyentes"
   not_verifiable "Versión de cada conector y período de convivencia de versiones"
-scenario QS_D9 "D-QS9" attribute "disponibilidad"
+scenario QS_D9 "D-QS9" attribute "Fault tolerance"
+  source "Falla de hardware del Escáner de Inspección No Intrusiva"
+  stimulus "El escáner no entrega el resultado de una inspección ordenada (D-K23 queda en silencio)"
+  artifact ADP, ADU
+  environment "Pico de levante: 150 órdenes de escáner por hora entre los dos puertos (L3); 3 escáneres por puerto (L23)"
+  response "La falla se detecta, el escáner se retira de servicio y la orden pasa a otro escáner del mismo puerto; si no queda ninguno, el caso pasa a inspección física; el funcionario ve el cambio en la Consola Aduanera. Medida: detección en 60 s o menos después del plazo de escaneo; reasignación en 5 min o menos; 0 órdenes sin resultado"
   not_verifiable "Plazos (timeouts), período de latido y reintentos"
 scenario QS_M1 "SoS-QS1 (M1)" attribute "desempeño"
   not_verifiable "Reglas de comportamiento; model checking sobre una máquina de estados de despacho"
