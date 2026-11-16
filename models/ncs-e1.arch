@@ -247,8 +247,9 @@ analysis SoSQS1M4 scenario "SoS-QS1 (M4)" deadline target 900 :
   RGW = 200, SoS_K5 = 40, NCG = 7200,
   [CGW = 300 | PGW = 300 | LGW = 300 | FGW = 300]
 
-// Scenarios for verification (Delivery 4). Six parts reconstructed from Delivery 3
-// [PENDIENTE: confirmar con la Entrega 2].
+// Scenarios for verification (Delivery 4). Six parts match this iteration's model
+// (aligned with Delivery 4 design). Entrega 2 §5.2 was the baseline; prose and
+// artifacts here reflect later tactics / redesign and are not a verbatim copy of E2.
 scenario QS_D1 "D-QS1" attribute "disponibilidad"
   source "Falla interna de un elemento del NCS (hardware o software)"
   stimulus "Un elemento de la cadena de levante deja de responder"

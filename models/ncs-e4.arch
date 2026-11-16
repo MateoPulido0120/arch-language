@@ -379,8 +379,9 @@ analysis SoSQS1M4 scenario "SoS-QS1 (M4)" deadline target 900 :
 analysis SoSQS1M3 scenario "SoS-QS1 (M3)" deadline target 60 :
   RGW = 30, SoS_K36 = 10, NCG = 15
 
-// Scenarios for verification (Delivery 4). Six parts reconstructed from Delivery 3
-// [PENDIENTE: confirmar con la Entrega 2].
+// Scenarios for verification (Delivery 4). Six parts match this iteration's model
+// (aligned with Delivery 4 design). Entrega 2 §5.2 was the baseline; prose and
+// artifacts here reflect later tactics / redesign and are not a verbatim copy of E2.
 scenario QS_D1 "D-QS1" attribute "disponibilidad"
   source "Falla interna de un elemento del NCS (hardware o software)"
   stimulus "Un elemento de la cadena de levante deja de responder"
@@ -477,7 +478,8 @@ scenario QS_M1 "SoS-QS1 (M1)" attribute "desempeño"
 scenario QS_M2 "SoS-QS1 (M2)" attribute "desempeño"
   not_verifiable "Distribuciones del error de estimación y su simulación"
 
-// Tactics of Delivery 2 [PENDIENTE: confirmar nombres y elementos con la Entrega 2]
+// Tactics introduced in Delivery 2 and kept as evolved in this model.
+// Entrega 2 §6.2 is the baseline; TE2_* IDs summarize those patterns for Delivery 4.
 tactic TE2_Redundancy "Redundancia activa" for QS_D1, QS_D10 changes NCG, TRA, ADU, RSK, CAR, TRS
 tactic TE2_Backup "Respaldo del Expediente Aduanero" for QS_D1 introduces EXDB2
 tactic TE2_Balancing "Balanceo de carga entre réplicas" for QS_D1 introduces BEN, BTR, BAD, BRI, BCA, BTS
