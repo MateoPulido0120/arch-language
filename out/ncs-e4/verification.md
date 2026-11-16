@@ -53,14 +53,14 @@ Run 17000 s, warm-up 0 s, 10 replications (seeds 1–10); varied: CAR
 
 | Scenario | Attribute | What is missing |
 |----------|-----------|-----------------|
-| D-QS2 | disponibilidad | Clases de evento con prioridad y una regla de descarte (compactación) en el Bus |
-| D-QS3 | seguridad | Identidad, credenciales y límites de confianza por conector |
-| D-QS4 | desempeño | Tasas de llegada y capacidad en consultas por componente (p99_latency ya existe desde el Laboratorio 5) |
-| D-QS5 | escalabilidad | Capacidad y carga de consultas por instancia frente al crecimiento |
-| D-QS6 | elasticidad | Perfiles de carga en el tiempo y costo por instancia-hora |
-| D-QS7 | integridad | Atributos del modelo canónico por conector; model checking de la regla de descarte de duplicados |
-| D-QS8 | interoperabilidad | Versión de cada conector y período de convivencia de versiones |
-| D-QS9 | disponibilidad | Plazos (timeouts), período de latido y reintentos |
+| D-QS2 | Fault tolerance y Resilience | Clases de evento con prioridad y una regla de descarte (compactación) en el Bus |
+| D-QS3 | Security | Identidad, credenciales y límites de confianza por conector |
+| D-QS4 | Performance | Tasas de llegada y capacidad en consultas por componente (p99_latency ya existe desde el Laboratorio 5) |
+| D-QS5 | Scalability y Elasticity | Capacidad y carga de consultas por instancia frente al crecimiento |
+| D-QS6 | Cost efficiency | Perfiles de carga en el tiempo y costo por instancia-hora |
+| D-QS7 | Interoperability | Atributos del modelo canónico por conector; model checking de la regla de descarte de duplicados |
+| D-QS8 | Evolvability | Versión de cada conector y período de convivencia de versiones |
+| D-QS9 | Fault tolerance | Plazos (timeouts), período de latido y reintentos |
 | SoS-QS1 (M1) | desempeño | Reglas de comportamiento; model checking sobre una máquina de estados de despacho |
 | SoS-QS1 (M2) | desempeño | Distribuciones del error de estimación y su simulación |
 
